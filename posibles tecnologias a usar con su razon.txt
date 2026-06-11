@@ -1,0 +1,56 @@
+TECNOLOGÍAS A USAR — Proyecto PageRank
+MATE1187 · Álgebra Lineal para la Computación
+========================================================
+
+LENGUAJE
+--------
+- Python 3.11+
+  Razón: recomendado en el enunciado, ecosistema científico maduro.
+
+ÁLGEBRA LINEAL
+--------------
+- NumPy
+  Razón: operaciones matriciales, cálculo de autovalores/autovectores,
+  iteraciones vectorizadas. Es el núcleo matemático del proyecto.
+
+GRAFOS
+------
+- NetworkX
+  Razón: construcción y manipulación de grafos dirigidos, conversión
+  a matriz de adyacencia, análisis de estructura de red.
+
+VISUALIZACIÓN
+-------------
+- Matplotlib
+  Razón: gráficos de convergencia, evolución de rankings, barras de
+  importancia relativa de nodos.
+- NetworkX + Matplotlib (combinados)
+  Razón: dibujar el grafo con nodos, enlaces y etiquetas directamente
+  desde la estructura del grafo.
+
+ENTORNO INTERACTIVO
+-------------------
+- Jupyter Notebook
+  Razón: permite combinar código, salida gráfica y texto explicativo
+  en un solo documento, ideal para el informe y las secciones del proyecto.
+
+INFORME
+-------
+- Microsoft Word (.docx) o LaTeX
+  Razón: documento entregable formal con ecuaciones, tablas y figuras.
+
+PRESENTACIÓN
+------------
+- PowerPoint o Canva
+  Razón: slides para la presentación de 15-20 minutos.
+
+CONTROL DE VERSIONES (recomendado)
+-----------------------------------
+- Git + GitHub
+  Razón: coordinación entre los 4 integrantes del equipo.
+
+========================================================
+NOTA: No se recomienda agregar frameworks web, bases de datos
+ni librerías adicionales. Con 11 días de desarrollo, mantener
+el stack simple y enfocado es clave para terminar a tiempo.
+========================================================
