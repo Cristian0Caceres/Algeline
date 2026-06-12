@@ -1,1 +1,52 @@
-# Algeline
+pagerank/
+│
+├── README.md                          # Descripción general del proyecto
+│
+├── docs/                              # Documentación e informe
+│   ├── informe/
+│   │   ├── informe_final.pdf          # Informe entregable
+│   │   └── informe_final.docx         # Versión editable
+│   └── presentacion/
+│       └── slides.pptx                # Presentación 15-20 min
+│
+├── src/                               # Código fuente principal
+│   ├── __init__.py
+│   │
+│   ├── core/                          # Lógica central (álgebra lineal pura)
+│   │   ├── __init__.py
+│   │   ├── graph.py                   # Construcción del grafo y matriz adyacencia
+│   │   ├── transition_matrix.py       # Construcción de matriz de transición
+│   │   └── pagerank.py                # Algoritmo iterativo PageRank
+│   │
+│   ├── analysis/                      # Análisis y experimentos
+│   │   ├── __init__.py
+│   │   ├── convergence.py             # Análisis de convergencia
+│   │   └── experiments.py             # Pruebas variando parámetros
+│   │
+│   └── visualization/                 # Graficos y visualizaciones
+│       ├── __init__.py
+│       ├── plot_graph.py              # Visualizar red/grafo
+│       ├── plot_rankings.py           # Evolución de rankings
+│       └── plot_convergence.py        # Convergencia del algoritmo
+│
+├── notebooks/                         # Jupyter Notebooks (para el informe)
+│   ├── 01_marco_teorico.ipynb         # Ejemplos matemáticos sección I
+│   ├── 02_red_ejemplo.ipynb           # Construcción red sección II
+│   ├── 03_implementacion.ipynb        # Implementación sección III-A
+│   └── 04_analisis_resultados.ipynb   # Análisis sección III-B
+│
+├── tests/                             # Pruebas unitarias
+│   ├── test_graph.py
+│   ├── test_transition_matrix.py
+│   └── test_pagerank.py
+│
+├── data/                              # Redes de ejemplo
+│   ├── red_pequena.json               # Red 5-8 nodos (ejemplo manual)
+│   ├── red_mediana.json               # Red ~20 nodos
+│   └── red_grande.json                # Red ~50+ nodos
+│
+├── outputs/                           # Resultados generados
+│   ├── figures/                       # Gráficos exportados (.png/.svg)
+│   └── results/                       # Rankings en CSV o JSON
+│
+└── requirements.txt                   # Dependencias
