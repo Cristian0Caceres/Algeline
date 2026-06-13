@@ -1,0 +1,115 @@
+Tareas del Proyecto — PageRank
+
+11 días de desarrollo
+
+
+Día 1–2 | Setup y estructura base
+
+
+ Crear el repositorio y la estructura de carpetas del proyecto
+ Configurar entorno virtual de Python e instalar dependencias (NumPy, NetworkX, Matplotlib)
+ Crear requirements.txt
+ Diseñar y construir la red pequeña manualmente (5–8 nodos) → guardar en data/red_pequena.json
+ Diseñar la red mediana (~20 nodos) → guardar en data/red_mediana.json
+
+
+
+Día 3–4 | Implementación del core
+
+
+ Implementar graph.py
+
+ Cargar red desde JSON
+ Construir grafo dirigido con NetworkX
+ Generar matriz de adyacencia con NumPy
+
+
+
+ Implementar transition_matrix.py
+
+ Normalizar columnas para obtener probabilidades
+ Manejar nodos sin salida (dangling nodes)
+ Aplicar damping factor: M = d·A + (1-d)/n · ones
+
+
+
+ Implementar pagerank.py
+
+ Inicializar vector de rankings uniforme
+ Aplicar iteraciones: r = M · r
+ Detectar convergencia por norma de diferencia
+ Retornar ranking ordenado por importancia
+
+
+
+
+
+
+Día 5–6 | Experimentos y análisis
+
+
+ Implementar convergence.py
+
+ Registrar diferencia entre iteraciones sucesivas
+ Determinar número de iteraciones hasta convergencia
+
+
+
+ Implementar experiments.py
+
+ Experimento 1: variar número de nodos (pequeña / mediana / grande)
+ Experimento 2: variar estructura de enlaces (lineal, estrella, cíclica, aleatoria)
+ Experimento 3: variar cantidad de iteraciones (5, 20, 50, 100)
+ Experimento 4: variar damping factor (0.5, 0.75, 0.85, 0.95)
+ Crear red grande (~50 nodos) → guardar en data/red_grande.json
+
+
+
+
+
+
+Día 7–8 | Visualizaciones
+
+
+ Implementar plot_graph.py
+
+ Dibujar grafo con nodos y aristas dirigidas
+ Colorear nodos según su ranking final
+ Exportar figura a outputs/figures/
+
+
+
+ Implementar plot_rankings.py
+
+ Gráfico de barras con ranking por nodo
+ Comparar rankings entre distintas configuraciones
+
+
+
+ Implementar plot_convergence.py
+
+ Gráfico de convergencia (diferencia vs iteración)
+ Comparar convergencia para distintos damping factors
+
+
+
+
+
+
+Día 9 | Integración y pipeline completo
+
+
+ Implementar main.py que ejecute el pipeline completo de principio a fin
+ Verificar que todos los módulos se conectan correctamente
+ Exportar resultados finales a outputs/results/ en CSV o JSON
+ Ejecutar y validar los tests en tests/
+
+
+
+Día 10–11 | Revisión y cierre
+
+
+ Revisar y limpiar todo el código (comentarios, nombres de variables)
+ Verificar que los gráficos son claros y exportan correctamente
+ Revisar coherencia de resultados entre experimentos
+ Control final: ejecutar main.py de punta a punta sin errores
