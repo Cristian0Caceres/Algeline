@@ -1,36 +1,15 @@
-def pagerank(grafo, d=0.85, iteraciones=20):
-    paginas = list(grafo.keys())
-    N = len(paginas)
+import numpy as np
 
-    # Inicialización
-    pr = {p: 1 / N for p in paginas}
+def Pagerank(_Matrix, _I = 10, _P = 0.85):
+    _P = 0.85
+    _len = len(_Matrix)
+    PR = np.ones(_len) / _len
 
-    for _ in range(iteraciones):
-        nuevo_pr = {}
+    for iteracion in range(10):
 
-        for pagina in paginas:
-            suma = 0
+        PR = _P * _Matrix @ PR + (1-_P)/_len
 
-            # Buscar quién apunta a esta página
-            for otra in paginas:
-                if pagina in grafo[otra]:
-                    suma += pr[otra] / len(grafo[otra])
-
-            nuevo_pr[pagina] = (1 - d) / N + d * suma
-
-        pr = nuevo_pr
-
-    return pr
-
-
-grafo = {
-    "A": ["B", "C"],
-    "B": ["C"],
-    "C": ["A"],
-    "D": ["C"]
-}
-
-resultado = pagerank(grafo)
-
-for pagina, valor in resultado.items():
-    print(f"{pagina}: {valor:.4f}")
+        print(
+            f"Iteración {iteracion+1}:",
+            PR
+        )
