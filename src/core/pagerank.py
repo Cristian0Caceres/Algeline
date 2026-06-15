@@ -1,7 +1,6 @@
 import numpy as np
 
 def Pagerank(_Matrix, _I = 10, _P = 0.85):
-    _P = 0.85
     _len = len(_Matrix)
     PR = np.ones(_len) / _len
 
