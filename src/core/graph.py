@@ -1,20 +1,17 @@
 import networkx as nx
 import json # si
 
-# Crear grafo dirigido
-Grafo = nx.DiGraph()
 
+def cargar_grafo(ruta: str) -> nx.DiGraph:
+    with open(ruta, encoding="utf-8") as f:
+        datos = json.load(f)
+        
+        Grafo=nx.DiGraph()
+        
+        for nodo in datos["nodos"]:
+            Grafo.add_node(nodo["id"])
 
-#Cargar json
-with open("datos.json") as a:
-    datos = json.load(a)
-
-for nodo in datos["nodos"]:
-    Grafo.add_node(nodo["id"])
-
-for arista in datos["aristas"]:
-    Grafo.add_edge(arista["source"],arista["target"])
-
-print(Grafo.nodes())
-print(Grafo.edges())
-
+        for arista in datos["aristas"]:
+            Grafo.add_edge(arista["source"], arista["target"])
+        
+        return Grafo

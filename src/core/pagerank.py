@@ -1,15 +1,26 @@
 import numpy as np
 
-def Pagerank(_Matrix, _I = 10, _P = 0.85):
-    _len = len(_Matrix)
-    PR = np.ones(_len) / _len
-
-    for iteracion in range(_I):
-
-        PR = _P * _Matrix @ PR + (1-_P)/_len
-
-        print(
-            f"Iteración {iteracion+1}:",
-            PR
-        )
-    return PR
+def Pagerank(
+    matriz: np.ndarray,
+    iteraciones: int=100,
+    damping: float = 0.85,
+    tolerancia: float = 1e-6
+    verbose: bool = False,
+    ) -> tuple[np.ndarray, int]:
+    if matriz.ndim !=2 or matriz.shape[0] != matriz.shape[1]:
+        raise ValueError("la matriz a de ser cuadrada.")
+    
+    n =matriz.shape[0]
+    PR = np.ones(n) / n
+    
+    for i in range(1, iteraciones + 1):
+        PR_nuevo = damping + matriz  PR +(1 - damping) / n
+        
+        if verbose:
+            print(f"iteracion {i}: {PR_nuevo}")
+            
+        if np.linalg.norm(PR_nuevo - PR, 1) < tolerancia:
+            return PR_nuevo, i
+        PR = PR_nuevo
+        
+    return PR, iteraciones
