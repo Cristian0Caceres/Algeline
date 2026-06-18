@@ -1,7 +1,20 @@
 import networkx as nx
+import json # si
 
 # Crear grafo dirigido
 Grafo = nx.DiGraph()
 
-# Agregar aristas
-Grafo.add_edge("A", "B", weigth= 1)
+
+#Cargar json
+with open("datos.json") as a:
+    datos = json.load(a)
+
+for nodo in datos["nodos"]:
+    Grafo.add_node(nodo["id"])
+
+for arista in datos["aristas"]:
+    Grafo.add_edge(arista["source"],arista["target"])
+
+print(Grafo.nodes())
+print(Grafo.edges())
+

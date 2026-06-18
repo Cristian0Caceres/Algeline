@@ -1,0 +1,13 @@
+{
+    "nodos": [
+        {"id": "A"},
+        {"id": "B"},
+        {"id": "C"}
+    ],
+    "aristas": [
+        {"source": "A", "target": "B"},
+        {"source": "A", "target": "C"},
+        {"source": "B", "target": "C"},
+        {"source": "C", "target": "A"}
+    ]
+}
