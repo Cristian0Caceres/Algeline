@@ -1,33 +1,24 @@
 import networkx as nx
 import numpy as np
-import pagerank as pr
 
-
-G = nx.DiGraph()
-
-G.add_edge("A", "B")
-G.add_edge("A", "C")
-G.add_edge("B", "C")
-G.add_edge("C", "A")
-
-def crearMatrix(Grafo):
-    nodos = list(Grafo.nodes())
+def crear_matriz(grafo: nx.DiGraph) -> tuple[np.ndarray, list]:
+    nodos = list(grafo.nodes())
     n = len(nodos)
-
-    M = np.zeros((n, n))
-
+    indice = {nodo:i for i, nodo in enumerate(nodos)}
+    
+    
+    M = np.zeroes((n, n))
+    
+    
     for j, origen in enumerate(nodos):
-
-        salidas = Grafo.out_degree(origen)
-
-        for destino in Grafo.neighbors(origen):
-
-            i = nodos.index(destino)
-
-            M[i][j] = 1 / salidas
-    print(M)
-    return M
-
-#testeo todo feito todo horrible
-matriz = crearMatrix(G)
-pr.Pagerank(matriz)
+        salidas = grafo.out_degree(origen)
+        
+        if salidas == 0:
+            M[:, j] = 1/n
+            
+        else:
+            for destiono in grafo.neighbors(origen):
+                i = indice[destino]
+                M[i][j] = 1 / salidas
+                
+    return M , nodos
