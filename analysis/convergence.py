@@ -60,8 +60,9 @@ REFERENCIAS BIBLIOGRÁFICAS REALES:
 
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import List, Tuple, Optional
-
+from matplotlib.figure import Figure
+from matplotlib.axes import Axes 
+from typing import List, Tuple, Optional, Dict
 
 def calculate_l1_norm(v1: np.ndarray, v2: np.ndarray) -> float:
     """Calcula la norma L1 de la diferencia entre dos vectores.
@@ -228,7 +229,7 @@ def plot_convergence_history(
     history: List[np.ndarray],
     norm_types: List[str] = ["l1", "l2", "max_diff"],
     title: str = "Convergencia de PageRank por Iteración"
-) -> plt.Figure:
+) -> Figure:
     """Genera un gráfico Matplotlib que muestra el error de convergencia vs iteraciones.
 
     Muestra de forma simultánea el decaimiento exponencial del error utilizando
@@ -250,7 +251,7 @@ def plot_convergence_history(
     num_iters = len(history) - 1
     iterations = np.arange(1, num_iters + 1)
 
-    errors = {norm: [] for norm in norm_types}
+    errors: Dict[str, List[float]] = {norm: [] for norm in norm_types}
 
     for k in range(1, len(history)):
         v_curr = history[k]

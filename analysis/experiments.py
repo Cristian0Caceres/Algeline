@@ -70,8 +70,9 @@ REFERENCIAS BIBLIOGRÁFICAS REALES:
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
+import matplotlib as mpl
 from typing import List, Dict, Tuple, Any
+from matplotlib.figure import Figure
 import os
 
 from analysis.convergence import (
@@ -440,7 +441,7 @@ def plot_experiment_results(
     results: Dict[str, Any],
     experiment_type: str,
     output_dir: str = "outputs/figures"
-) -> List[plt.Figure]:
+) -> List[Figure]:
     """Genera y guarda gráficos para los resultados de un experimento de PageRank.
 
     Selecciona el tipo de visualización según el experimento ejecutado.
@@ -475,7 +476,7 @@ def plot_experiment_results(
             f"Use uno de: {valid_types}."
         )
 
-    figures: List[plt.Figure] = []
+    figures: List[Figure] = []
 
     if experiment_type == "node_scaling":
         figures.extend(_plot_node_scaling(results, output_dir))
@@ -492,7 +493,7 @@ def plot_experiment_results(
     return figures
 
 
-def _plot_node_scaling(results: Dict[str, Any], output_dir: str) -> List[plt.Figure]:
+def _plot_node_scaling(results: Dict[str, Any], output_dir: str) -> List[Figure]:
     """Visualiza el experimento de escalado por número de nodos.
 
     Args:
@@ -513,7 +514,7 @@ def _plot_node_scaling(results: Dict[str, Any], output_dir: str) -> List[plt.Fig
         converged, it, err = results["convergence"][n]
         iters_to_conv.append(it)
 
-    bar_colors = cm.viridis(np.linspace(0.25, 0.85, len(nodes_list)))
+    bar_colors = mpl.colormaps["viridis"](np.linspace(0.25, 0.85, len(nodes_list)))
     bars = ax1.bar(
         [str(n) for n in nodes_list],
         iters_to_conv,
@@ -561,7 +562,7 @@ def _plot_node_scaling(results: Dict[str, Any], output_dir: str) -> List[plt.Fig
         labels = [str(node) for node, _ in sorted_scores[:top_k]]
         values = [val for _, val in sorted_scores[:top_k]]
 
-        bar_c = cm.plasma(np.linspace(0.2, 0.85, top_k))
+        bar_c = mpl.colormaps["plasma"](np.linspace(0.2, 0.85, top_k))
         ax.barh(labels[::-1], values[::-1], color=bar_c[::-1], edgecolor="white", linewidth=0.6)
         ax.set_xlabel("Score PageRank", fontsize=9, labelpad=6)
         ax.set_title(f"n={n} nodos", fontsize=10, fontweight="bold")
@@ -578,7 +579,7 @@ def _plot_node_scaling(results: Dict[str, Any], output_dir: str) -> List[plt.Fig
     return figs
 
 
-def _plot_edge_density(results: Dict[str, Any], output_dir: str) -> List[plt.Figure]:
+def _plot_edge_density(results: Dict[str, Any], output_dir: str) -> List[Figure]:
     """Visualiza el experimento de densidad de enlaces.
 
     Args:
@@ -593,7 +594,7 @@ def _plot_edge_density(results: Dict[str, Any], output_dir: str) -> List[plt.Fig
 
     # --- Gráfico 1: Comparación de Rankings según densidad ---
     fig1, ax1 = plt.subplots(figsize=(10, 6), dpi=150)
-    colors = cm.cool(np.linspace(0.1, 0.9, len(densities)))
+    colors = mpl.colormaps["cool"](np.linspace(0.1, 0.9, len(densities)))
 
     for color, p in zip(colors, densities):
         scores = results["final_scores"][p]
@@ -649,7 +650,7 @@ def _plot_edge_density(results: Dict[str, Any], output_dir: str) -> List[plt.Fig
     return figs
 
 
-def _plot_damping_factor(results: Dict[str, Any], output_dir: str) -> List[plt.Figure]:
+def _plot_damping_factor(results: Dict[str, Any], output_dir: str) -> List[Figure]:
     """Visualiza el experimento de variación del damping factor.
 
     Args:
@@ -661,7 +662,7 @@ def _plot_damping_factor(results: Dict[str, Any], output_dir: str) -> List[plt.F
     """
     figs = []
     damping_factors = results["damping_factors"]
-    colors = cm.magma(np.linspace(0.15, 0.85, len(damping_factors)))
+    colors = mpl.colormaps["magma"](np.linspace(0.15, 0.85, len(damping_factors)))
 
     # --- Gráfico 1: Convergencia por iteración para cada valor de d ---
     fig1, ax1 = plt.subplots(figsize=(9, 5.5), dpi=150)
@@ -728,7 +729,7 @@ def _plot_damping_factor(results: Dict[str, Any], output_dir: str) -> List[plt.F
     return figs
 
 
-def _plot_max_iterations(results: Dict[str, Any], output_dir: str) -> List[plt.Figure]:
+def _plot_max_iterations(results: Dict[str, Any], output_dir: str) -> List[Figure]:
     """Visualiza el experimento de variación del número máximo de iteraciones.
 
     Args:
@@ -740,7 +741,7 @@ def _plot_max_iterations(results: Dict[str, Any], output_dir: str) -> List[plt.F
     """
     figs = []
     max_iters = results["max_iters"]
-    colors = cm.cividis(np.linspace(0.15, 0.85, len(max_iters)))
+    colors = mpl.colormaps["cividis"](np.linspace(0.15, 0.85, len(max_iters)))
 
     # --- Gráfico 1: Evolución del top-3 nodos a lo largo de las iteraciones ---
     # Usamos el historial del experimento con más iteraciones como referencia
