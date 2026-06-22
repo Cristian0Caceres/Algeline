@@ -1,0 +1,67 @@
+{
+    "nodos": [
+        {
+            "id": "A"
+        },
+        {
+            "id": "B"
+        },
+        {
+            "id": "C"
+        },
+        {
+            "id": "D"
+        },
+        {
+            "id": "E"
+        },
+        {
+            "id": "F"
+        },
+        {
+            "id": "G"
+        }
+    ],
+    "aristas": [
+        {
+            "source": "A",
+            "target": "B"
+        },
+        {
+            "source": "A",
+            "target": "C"
+        },
+        {
+            "source": "B",
+            "target": "C"
+        },
+        {
+            "source": "C",
+            "target": "D"
+        },
+        {
+            "source": "C",
+            "target": "E"
+        },
+        {
+            "source": "D",
+            "target": "A"
+        },
+        {
+            "source": "E",
+            "target": "F"
+        },
+        {
+            "source": "F",
+            "target": "G"
+        },
+        {
+            "source": "F",
+            "target": "B"
+        },
+        {
+            "source": "G",
+            "target": "C"
+        }
+    ]
+}
