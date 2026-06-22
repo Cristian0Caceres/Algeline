@@ -1,0 +1,43 @@
+Test ejecutado: 2026-06-17 22:22:14
+
+========================================
+  graph.py
+========================================
+[PASS] Grafo no es None
+[PASS] Grafo tiene 3 nodos
+[PASS] Grafo tiene 4 aristas
+[PASS] Nodo A existe
+[PASS] Arista A->B existe
+[PASS] Arista inexistente B->A no existe
+
+========================================
+  transition_matrix.py
+========================================
+[PASS] Retorna matriz y lista de nodos
+[PASS] Matriz es cuadrada
+[PASS] Dimensión coincide con nodos
+[PASS] Columnas suman 1 (estocástica)
+[PASS] No hay valores negativos
+[PASS] Nodo dangling: columna suma 1
+
+========================================
+  pagerank.py
+========================================
+[PASS] Retorna vector y número de iteraciones
+[PASS] Vector PR suma 1
+[PASS] Todos los valores son positivos
+[PASS] Convergió antes del máximo
+[PASS] Dimensión de PR coincide con nodos
+[PASS] verbose=False no rompe nada
+[PASS] Matriz no cuadrada lanza ValueError
+[PASS] damping=1.0 no rompe nada
+[PASS] damping=0.0 → distribución uniforme
+
+========================================
+  RESUMEN
+========================================
+  Total : 21
+  PASS  : 21
+  FAIL  : 0
+
+  Todo correcto.
