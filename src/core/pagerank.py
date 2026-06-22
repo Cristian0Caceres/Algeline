@@ -25,14 +25,3 @@ def pagerank(
         PR = PR_nuevo
 
     return PR, iteraciones
-
-def obtener_ranking_ordenado(PR: np.ndarray, nodos: list) -> list[tuple]:
-    """
-    Retorna el ranking de nodos ordenado por importancia (puntuación de PageRank descendente).
-    """
-    if len(PR) != len(nodos):
-        raise ValueError("La longitud del vector de PageRank y la lista de nodos deben coincidir.")
-    
-    ranking = list(zip(nodos, PR))
-    ranking.sort(key=lambda x: x[1], reverse=True)
-    return ranking
