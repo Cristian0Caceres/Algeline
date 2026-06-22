@@ -1,0 +1,246 @@
+{
+    "nodos": [
+        {
+            "id": "N0"
+        },
+        {
+            "id": "N1"
+        },
+        {
+            "id": "N2"
+        },
+        {
+            "id": "N3"
+        },
+        {
+            "id": "N4"
+        },
+        {
+            "id": "N5"
+        },
+        {
+            "id": "N6"
+        },
+        {
+            "id": "N7"
+        },
+        {
+            "id": "N8"
+        },
+        {
+            "id": "N9"
+        },
+        {
+            "id": "N10"
+        },
+        {
+            "id": "N11"
+        },
+        {
+            "id": "N12"
+        },
+        {
+            "id": "N13"
+        },
+        {
+            "id": "N14"
+        },
+        {
+            "id": "N15"
+        },
+        {
+            "id": "N16"
+        },
+        {
+            "id": "N17"
+        },
+        {
+            "id": "N18"
+        },
+        {
+            "id": "N19"
+        }
+    ],
+    "aristas": [
+        {
+            "source": "N0",
+            "target": "N2"
+        },
+        {
+            "source": "N0",
+            "target": "N17"
+        },
+        {
+            "source": "N1",
+            "target": "N7"
+        },
+        {
+            "source": "N2",
+            "target": "N18"
+        },
+        {
+            "source": "N2",
+            "target": "N12"
+        },
+        {
+            "source": "N2",
+            "target": "N17"
+        },
+        {
+            "source": "N3",
+            "target": "N0"
+        },
+        {
+            "source": "N3",
+            "target": "N17"
+        },
+        {
+            "source": "N3",
+            "target": "N11"
+        },
+        {
+            "source": "N3",
+            "target": "N12"
+        },
+        {
+            "source": "N4",
+            "target": "N6"
+        },
+        {
+            "source": "N5",
+            "target": "N13"
+        },
+        {
+            "source": "N5",
+            "target": "N11"
+        },
+        {
+            "source": "N5",
+            "target": "N14"
+        },
+        {
+            "source": "N6",
+            "target": "N7"
+        },
+        {
+            "source": "N6",
+            "target": "N17"
+        },
+        {
+            "source": "N6",
+            "target": "N2"
+        },
+        {
+            "source": "N6",
+            "target": "N18"
+        },
+        {
+            "source": "N7",
+            "target": "N4"
+        },
+        {
+            "source": "N7",
+            "target": "N3"
+        },
+        {
+            "source": "N7",
+            "target": "N1"
+        },
+        {
+            "source": "N8",
+            "target": "N7"
+        },
+        {
+            "source": "N8",
+            "target": "N0"
+        },
+        {
+            "source": "N8",
+            "target": "N1"
+        },
+        {
+            "source": "N8",
+            "target": "N2"
+        },
+        {
+            "source": "N9",
+            "target": "N19"
+        },
+        {
+            "source": "N9",
+            "target": "N2"
+        },
+        {
+            "source": "N10",
+            "target": "N8"
+        },
+        {
+            "source": "N10",
+            "target": "N3"
+        },
+        {
+            "source": "N10",
+            "target": "N1"
+        },
+        {
+            "source": "N10",
+            "target": "N12"
+        },
+        {
+            "source": "N10",
+            "target": "N6"
+        },
+        {
+            "source": "N11",
+            "target": "N19"
+        },
+        {
+            "source": "N11",
+            "target": "N18"
+        },
+        {
+            "source": "N11",
+            "target": "N6"
+        },
+        {
+            "source": "N12",
+            "target": "N8"
+        },
+        {
+            "source": "N13",
+            "target": "N1"
+        },
+        {
+            "source": "N13",
+            "target": "N7"
+        },
+        {
+            "source": "N14",
+            "target": "N18"
+        },
+        {
+            "source": "N14",
+            "target": "N17"
+        },
+        {
+            "source": "N14",
+            "target": "N11"
+        },
+        {
+            "source": "N15",
+            "target": "N12"
+        },
+        {
+            "source": "N16",
+            "target": "N19"
+        },
+        {
+            "source": "N17",
+            "target": "N7"
+        },
+        {
+            "source": "N19",
+            "target": "N5"
+        }
+    ]
+}
