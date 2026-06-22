@@ -1,0 +1,175 @@
+TECNOLOGÍAS Y FUNDAMENTOS MATEMÁTICOS — PROYECTO PAGERANK
+MATE1187 · Álgebra Lineal para la Computación
+================================================================================
+
+Este documento detalla la justificación tecnológica de las herramientas seleccionadas
+y los fundamentos algebraicos que sustentan el desarrollo de este proyecto.
+
+================================================================================
+PARTE 1: JUSTIFICACIÓN DE LAS TECNOLOGÍAS UTILIZADAS
+================================================================================
+
+1. LENGUAJE: Python (3.11+)
+   ------------------------
+   - Razón: Python es el estándar de facto para la computación científica y el
+     aprendizaje automático. Ofrece una sintaxis limpia que permite traducir
+     fórmulas matemáticas directamente en código legible sin la sobrecarga
+     de lenguajes compilados más complejos (como C++ o Java).
+   - Rol: Une las partes de cálculo matemático, visualización y la interfaz gráfica.
+
+2. ÁLGEBRA LINEAL: NumPy
+   ---------------------
+   - Razón: NumPy proporciona soporte para vectores y matrices multidimensionales
+     junto con una biblioteca de funciones matemáticas de alta eficiencia. 
+     Internamente está optimizado en C y Fortran (usando BLAS/LAPACK), lo que
+     permite realizar operaciones a velocidad nativa sin usar bucles "for" de Python.
+   - Rol en el Proyecto:
+     * Operaciones Vectorizadas: La multiplicación matriz-vector (M @ PR) de la
+       iteración de PageRank está completamente vectorizada en memoria.
+     * Cálculos de Normas: Se utiliza `np.linalg.norm(..., 1)` para evaluar la
+       norma L1 de la diferencia entre iteraciones, permitiendo detener el
+       algoritmo con precisión matemática.
+     * Indexación y Máscaras: Permite normalizar columnas y resolver nodos sin 
+       salida (*dangling nodes*) usando máscaras booleanas rápidas en NumPy.
+
+3. TEORÍA DE GRAFOS: NetworkX
+   --------------------------
+   - Razón: NetworkX es una biblioteca especializada en la creación, manipulación
+     y estudio de la estructura de redes complejas. Proporciona algoritmos
+     estándar de layout geométrico (como Fruchterman-Reingold / Spring layout)
+     para representar grafos de manera comprensible.
+   - Rol en el Proyecto:
+     * Construcción de la Red: Carga los nodos y aristas desde los archivos JSON
+       y construye un grafo dirigido (`nx.DiGraph`).
+     * Matriz de Adyacencia: Convierte la topología gráfica en una matriz numérica
+       de adyacencia de NumPy de forma nativa con `nx.to_numpy_array`.
+
+4. VISUALIZACIÓN: Matplotlib
+   -------------------------
+   - Razón: Es la biblioteca de gráficos en 2D más madura e integrada con el
+     ecosistema de NumPy y NetworkX. Permite una personalización absoluta de
+     colores, grosores de líneas, tamaños y etiquetas, y cuenta con un backend
+     interactivo diseñado específicamente para acoplarse con interfaces Qt.
+   - Rol en el Proyecto:
+     * Renderizado interactivo en la GUI y exportación estática (.png / .svg) de:
+       - El grafo de la red (nodos coloreados/escalados según su PageRank).
+       - Gráficos de barra con el ranking de importancia.
+       - Curvas logarítmicas de error para análisis de convergencia.
+
+5. INTERFAZ GRÁFICA: PySide6 (Qt para Python)
+   ------------------------------------------
+   - Razón: PySide6 proporciona los bindings oficiales de Python para Qt6, el
+     framework de diseño de interfaces de escritorio multiplataforma más robusto.
+     Permite separar la lógica computacional de la presentación y facilita la 
+     actualización en tiempo real de gráficos científicos a través de hilos y señales.
+   - Rol en el Proyecto:
+     * Ofrece las aplicaciones visuales (`main_gui.py` y `columna.py`) que permiten
+       al usuario cargar archivos JSON, ajustar dinámicamente parámetros como
+       el factor de amortiguamiento (d) o la tolerancia (e) mediante controles
+       gráficos, y ver los resultados tabulares y gráficos inmediatamente.
+
+
+================================================================================
+PARTE 2: FUNDAMENTOS MATEMÁTICOS DEL PAGERANK
+================================================================================
+
+El algoritmo PageRank asigna una puntuación de importancia relativa a cada nodo
+dentro de un grafo dirigido. Matemáticamente se sustenta sobre la teoría de
+matrices estocásticas, procesos de Markov y autovalores/autovectores.
+
+1. REPRESENTACIÓN DEL GRAFO Y MATRIZ DE ADYACENCIA
+   -----------------------------------------------
+   Sea un grafo dirigido G = (V, E) con n nodos, donde V es el conjunto de vértices
+   y E es el conjunto de aristas.
+   Definimos la matriz de adyacencia W de tamaño (n x n) de modo que:
+     W_{i,j} = 1  si existe un enlace dirigido desde el nodo j hacia el nodo i.
+     W_{i,j} = 0  en caso contrario.
+   (Nota: En esta formulación, W representa la transpuesta de la matriz de
+   adyacencia estándar de NetworkX para cumplir con el estándar de PageRank
+   donde la probabilidad fluye por columnas).
+
+2. CONSTRUCCIÓN DE LA MATRIZ DE TRANSICIÓN ESTOCÁSTICA
+   ---------------------------------------------------
+   Sea c_j el grado de salida del nodo j (número de enlaces salientes de j):
+     c_j = suma_{i=1}^{n} W_{i,j}
+
+   Para obtener una matriz de transición M, debemos normalizar las columnas de W
+   para representar probabilidades de transición (Proceso de Markov).
+
+   * Caso A: Nodo con enlaces salientes (c_j > 0):
+     M_{i,j} = W_{i,j} / c_j
+
+   * Caso B: Nodo sin enlaces salientes / dangling node (c_j = 0):
+     Si el usuario llega a un nodo sin salida, se asume que salta con igual
+     probabilidad a cualquier otro nodo de la red (teletransportación uniforme):
+     M_{i,j} = 1 / n  para todo i.
+
+   La matriz M resultante es una matriz estocástica por columnas (column-stochastic),
+   lo que significa que todas sus entradas son no negativas (M_{i,j} >= 0) y la
+   suma de los elementos de cualquier columna es exactamente 1:
+     suma_{i=1}^{n} M_{i,j} = 1  para todo j.
+
+3. MODELO DEL CAMINANTE ALEATORIO Y FACTOR DE AMORTIGUAMIENTO
+   ----------------------------------------------------------
+   Para resolver el problema del atrapamiento en ciclos cerrados (spider traps)
+   y asegurar la unicidad del ranking, se introduce el factor de amortiguamiento
+   (damping factor) d (típicamente d = 0.85).
+
+   El comportamiento del usuario se modela así:
+   - Con probabilidad d, el usuario sigue uno de los enlaces salientes del nodo actual.
+   - Con probabilidad (1 - d), el usuario se cansa y se "teletransporta" de forma
+     uniforme a cualquier otro nodo de la red con probabilidad 1 / n.
+
+   Matemáticamente, definimos la Matriz de Google G como:
+     G = d * M + ((1 - d) / n) * J
+   donde J es una matriz de tamaño (n x n) llena de unos.
+
+4. EL TEOREMA DE PERRON-FROBENIUS Y EXISTENCIA DEL RANKING
+   -------------------------------------------------------
+   Dado que d < 1, todas las entradas de la Matriz de Google G son estrictamente
+   positivas (G_{i,j} > 0), lo que significa que G es una matriz positiva e 
+   irreducible (y por lo tanto, primitiva).
+
+   Según el Teorema de Perron-Frobenius para matrices primitivas positivas:
+   1. El radio espectral de G es r(G) = 1. Por lo tanto, lambda = 1 es el autovalor
+      dominante de G.
+   2. El autovalor lambda = 1 es simple (multiplicidad algebraica 1).
+   3. Existe un único autovector x* correspondiente a lambda = 1 cuyas entradas
+      son todas estrictamente positivas (x*_i > 0) y que cumple con la condición
+      de normalización (suma de x*_i = 1).
+
+   Este vector x* es el vector estacionario de PageRank. La ecuación que define
+   el estado estacionario (el ranking final de importancia) es:
+     G * x* = x*   ==>  (d * M + ((1 - d) / n) * J) * x* = x*
+
+5. MÉTODO DE LA POTENCIA (POWER ITERATION) Y CONVERGENCIA
+   ------------------------------------------------------
+   Para calcular x* en sistemas prácticos, se utiliza el Método de la Potencia.
+   Inicializamos un vector x^(0) con una distribución uniforme:
+     x^(0) = [1/n, 1/n, ..., 1/n]^T
+
+   En cada paso k >= 0, realizamos la recurrencia:
+     x^(k+1) = G * x^(k)
+             = d * M * x^(k) + ((1 - d) / n) * J * x^(k)
+
+   Dado que la suma de los elementos de x^(k) es 1 en cada paso, la multiplicación
+   J * x^(k) se simplifica al vector columna 1 de unos. Así, la ecuación recursiva
+   vectorial se reduce a:
+     x^(k+1) = d * M * x^(k) + ((1 - d) / n) * 1
+
+   * Ritmo de Convergencia:
+     El Teorema de la Potencia garantiza que el error en la iteración k disminuye
+     proporcionalmente al cociente entre el segundo autovalor dominante (lambda_2)
+     y el primero (lambda_1 = 1).
+     Se puede demostrar que para la Matriz de Google G, |lambda_2| <= d.
+     Por tanto, el error decrece geométricamente en cada iteración:
+       ||x^(k) - x*||_1 <= C * d^k
+     Donde d representa la tasa de convergencia. Si d = 0.85, la convergencia es
+     rápida. Si d se acerca a 1 (ej. d = 0.95), el número de iteraciones aumenta.
+
+6. CRITERIO DE PARADA (CONVERGENCIA NUMÉRICA)
+   ------------------------------------------
+   La convergencia se alcanza y las iteraciones se detienen cuando la norma L1
+   (distancia de Manhattan) de la diferencia entre dos vectores sucesivos es menor
+   que una tolerancia preestablecida epsilon (generalmente epsilon = 1e-6):
+     ||x^(k+1) - x^(k)||_1 = suma_{i=1}^{n} |x^(k+1)_i - x^(k)_i| < epsilon
